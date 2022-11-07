@@ -1,5 +1,6 @@
-package org.academiadecodigo.javabank.managers;
+package org.academiadecodigo.javabank.Services.managers;
 
+import org.academiadecodigo.javabank.Services.AbstractAccountService;
 import org.academiadecodigo.javabank.factories.AccountFactory;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.AccountType;
@@ -10,7 +11,7 @@ import java.util.Map;
 /**
  * Responsible for managing accounts
  */
-public class AccountManager {
+public class AccountService implements AbstractAccountService {
 
     private AccountFactory accountFactory = new AccountFactory();
     private Map<Integer, Account> accountMap;
@@ -18,7 +19,7 @@ public class AccountManager {
     /**
      * Creates a new {@code AccountManager}
      */
-    public AccountManager() {
+    public AccountService() {
         accountMap = new HashMap<>();
     }
 
@@ -29,7 +30,8 @@ public class AccountManager {
      * @return the new account
      * @see AccountFactory#createAccount(AccountType)
      */
-    public Account openAccount(AccountType accountType) {
+    @Override
+    public Account addAccount(AccountType accountType) {
         Account newAccount = accountFactory.createAccount(accountType);
         accountMap.put(newAccount.getId(), newAccount);
         return newAccount;
@@ -41,6 +43,7 @@ public class AccountManager {
      * @param id     the id of the account
      * @param amount the amount to deposit
      */
+    @Override
     public void deposit(int id, double amount) {
         accountMap.get(id).credit(amount);
     }
@@ -51,6 +54,7 @@ public class AccountManager {
      * @param id     the id of the account
      * @param amount the amount to withdraw
      */
+    @Override
     public void withdraw(int id, double amount) {
 
         Account account = accountMap.get(id);
@@ -69,6 +73,7 @@ public class AccountManager {
      * @param dstId  the destination account id
      * @param amount the amount to transfer
      */
+    @Override
     public void transfer(int srcId, int dstId, double amount) {
 
         Account srcAccount = accountMap.get(srcId);

@@ -1,7 +1,8 @@
 package org.academiadecodigo.javabank.controller;
 
-import org.academiadecodigo.javabank.managers.AccountManager;
-import org.academiadecodigo.javabank.model.Bank;
+import org.academiadecodigo.javabank.Services.AuthService;
+import org.academiadecodigo.javabank.Services.CustomerService;
+import org.academiadecodigo.javabank.Services.managers.AccountService;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.AccountType;
 import org.academiadecodigo.javabank.view.NewAccountView;
@@ -11,16 +12,18 @@ import org.academiadecodigo.javabank.view.NewAccountView;
  */
 public class NewAccountController extends AbstractController {
 
-    private Bank bank;
+    private AuthService authService;
     private Integer newAccountId;
+    private AccountService accountService;
 
-    /**
-     * Sets the bank
-     *
-     * @param bank the bank to set
-     */
-    public void setBank(Bank bank) {
-        this.bank = bank;
+
+
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
+    }
+
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     /**
@@ -36,7 +39,7 @@ public class NewAccountController extends AbstractController {
      * Creates a new {@link Account}
      *
      * @see Controller#init()
-     * @see AccountManager#openAccount(AccountType)
+     * @see AccountService#addAccount(AccountType)
      */
     @Override
     public void init() {
@@ -47,9 +50,10 @@ public class NewAccountController extends AbstractController {
 
     private int createAccount() {
 
-        Account newAccount = bank.getAccountManager().openAccount(AccountType.CHECKING);
-        bank.getLoginCustomer().addAccount(newAccount);
+        Account newAccount = accountService.addAccount(AccountType.CHECKING);
+        authService.getAccessingCustomer().addAccount(newAccount);
 
         return newAccount.getId();
     }
+
 }

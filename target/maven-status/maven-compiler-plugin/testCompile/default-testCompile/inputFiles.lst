@@ -1,0 +1,16 @@
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/services/AccountServiceImplTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/controller/transaction/WithdrawalControllerTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/model/account/SavingsAccountTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/view/LoginViewTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/services/AuthServiceImplTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/services/CustomerServiceImplTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/view/NewAccountControllerTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/controller/NewAccountControllerTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/controller/LoginControllerTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/controller/transaction/DepositControllerTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/view/AccountTransactionViewTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/model/account/CheckingAccountTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/view/MainViewTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/view/BalanceViewTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/controller/BalanceControllerTest.java
+/home/baljeet/Documents/bootcamp/exercises/javabank/javabank-step04-tests/src/test/java/org/academiadecodigo/javabank/controller/MainControllerTest.java

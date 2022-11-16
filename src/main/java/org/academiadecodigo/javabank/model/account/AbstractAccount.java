@@ -16,9 +16,10 @@ import java.util.Date;
 
 @Entity
 @Table(name="account_single_table")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "account_type",discriminatorType = DiscriminatorType.STRING)
 public abstract class AbstractAccount extends AbstractModel implements Account {
-  @Version
-    private Integer version;
+
 
   @CreationTimestamp
   private Date creationTime;
@@ -27,6 +28,7 @@ public abstract class AbstractAccount extends AbstractModel implements Account {
   private Date updateTime;
 
     private double balance = 0;
+    @Transient
     private Integer customerId;
     @ManyToOne
     private Customer customer;
@@ -96,5 +98,10 @@ public abstract class AbstractAccount extends AbstractModel implements Account {
     @Override
     public void setCustomerId(Integer id) {
         customerId = id;
+    }
+    @Override
+    public void setCustomer(Customer customer){
+        this.customer=customer;
+
     }
 }

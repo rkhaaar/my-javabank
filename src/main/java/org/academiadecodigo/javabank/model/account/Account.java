@@ -1,5 +1,6 @@
 package org.academiadecodigo.javabank.model.account;
 
+import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.Model;
 
 /**
@@ -76,4 +77,7 @@ public interface Account extends Model {
      * @param id the owner customer id
      */
     void setCustomerId(Integer id);
+
+
+    void setCustomer(Customer customer);
 }

@@ -41,10 +41,7 @@ public class App {
         ole.setPhone("965897456");
         ole.setId(1);
         customerService.add(ole);
-        AccountFactory oi = new AccountFactory();
-        Account haja =accountFactory.createAccount(AccountType.CHECKING);
-        ole.addAccount(haja);
-        accountService.add(haja);
+
 
         // start application
         controller.init();

@@ -1,5 +1,7 @@
 package org.academiadecodigo.javabank.model.account;
 
+import org.academiadecodigo.javabank.model.Customer;
+
 import javax.persistence.Entity;
 
 /**
@@ -36,4 +38,6 @@ public class SavingsAccount extends AbstractAccount {
     public boolean canWithdraw() {
         return false;
     }
+
+
 }

@@ -13,14 +13,9 @@ import java.util.List;
 /**
  * The customer model entity
  */
-@Entity (name = "customers_table")
-
+@Entity
+@Table( name = "customer")
 public class Customer extends AbstractModel {
-    @Version
-    private Integer version;
-
-    @CreationTimestamp
-    private Date creationTime;
 
 
     private String firstName;
@@ -28,7 +23,12 @@ public class Customer extends AbstractModel {
     private String email;
     private String phone;
 
-    @OneToMany(cascade = {CascadeType.ALL},orphanRemoval = true,mappedBy = "customer",targetEntity = AbstractAccount.class)
+    @OneToMany(
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true,
+            fetch = FetchType.EAGER,
+            mappedBy = "customer",
+            targetEntity = AbstractAccount.class)
     private List<Account> accounts = new ArrayList<>();
 
     /**

@@ -27,7 +27,7 @@ public class AuthServiceImplTest {
         // setup
         int fakeId = 9999;
         Customer fakeCustomer = mock(Customer.class);
-        when(customerService.get(fakeId)).thenReturn(fakeCustomer);
+        when(customerService.findById(fakeId)).thenReturn(fakeCustomer);
 
         // exercise
         boolean authResult = authService.authenticate(fakeId);
@@ -44,7 +44,7 @@ public class AuthServiceImplTest {
         // setup
         int fakeId = 9999;
         Customer fakeCustomer = mock(Customer.class);
-        when(customerService.get(fakeId)).thenReturn(null);
+        when(customerService.findById(fakeId)).thenReturn(null);
 
         // exercise
         boolean authResult = authService.authenticate(fakeId);
@@ -60,7 +60,7 @@ public class AuthServiceImplTest {
         // setup
         int fakeId = 9999;
         Customer fakeCustomer = mock(Customer.class);
-        when(customerService.get(fakeId)).thenReturn(fakeCustomer);
+        when(customerService.findById(fakeId)).thenReturn(fakeCustomer);
         when(fakeCustomer.getId()).thenReturn(fakeId);
         authService.authenticate(fakeId);
 

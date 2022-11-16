@@ -1,20 +1,34 @@
 package org.academiadecodigo.javabank.model;
 
+import org.academiadecodigo.javabank.model.account.AbstractAccount;
 import org.academiadecodigo.javabank.model.account.Account;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * The customer model entity
  */
+@Entity (name = "customers_table")
+
 public class Customer extends AbstractModel {
+    @Version
+    private Integer version;
+
+    @CreationTimestamp
+    private Date creationTime;
+
 
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
 
+    @OneToMany(cascade = {CascadeType.ALL},orphanRemoval = true,mappedBy = "customer",targetEntity = AbstractAccount.class)
     private List<Account> accounts = new ArrayList<>();
 
     /**

@@ -13,7 +13,7 @@ public interface AccountService {
      * @param id the id of the account to get
      * @return the account with the given id
      */
-    Account get(Integer id);
+    Account findById(Integer id);
 
     /**
      * Adds an account to the service

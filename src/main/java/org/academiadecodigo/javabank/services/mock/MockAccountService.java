@@ -25,7 +25,7 @@ public class MockAccountService implements AccountService {
     }
 
     @Override
-    public Account get(Integer id) {
+    public Account findById(Integer id) {
         return accountMap.get(id);
     }
 

@@ -16,7 +16,7 @@ public interface CustomerService {
      * @param id the customer id
      * @return the customer with the given id
      */
-    Customer get(Integer id);
+    Customer findById(Integer id);
 
     /**
      * Gets the list of customers

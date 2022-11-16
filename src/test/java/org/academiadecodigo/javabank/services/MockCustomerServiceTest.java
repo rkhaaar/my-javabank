@@ -42,14 +42,14 @@ public class MockCustomerServiceTest {
     public void testGet() {
 
         // check if customer one returns null
-        assertNull(customerService.get(1));
+        assertNull(customerService.findById(1));
 
         // add a customer
         Customer c = new Customer();
         customerService.add(c);
 
         // check if it was added successfully
-        assertEquals(c, customerService.get(1));
+        assertEquals(c, customerService.findById(1));
 
     }
 

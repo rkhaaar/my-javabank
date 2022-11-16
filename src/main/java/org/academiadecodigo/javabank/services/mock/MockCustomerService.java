@@ -23,10 +23,10 @@ public class MockCustomerService implements CustomerService {
     }
 
     /**
-     * @see CustomerService#get(Integer)
+     * @see CustomerService#findById(Integer)
      */
     @Override
-    public Customer get(Integer id) {
+    public Customer findById(Integer id) {
         return customerMap.get(id);
     }
 

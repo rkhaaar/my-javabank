@@ -15,6 +15,8 @@ public interface Account extends Model {
      */
     double getBalance();
 
+
+
     /**
      * Gets the account type
      *

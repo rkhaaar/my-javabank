@@ -1,15 +1,35 @@
 package org.academiadecodigo.javabank.model.account;
 
 import org.academiadecodigo.javabank.model.AbstractModel;
+import org.academiadecodigo.javabank.model.Customer;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * A generic account model entity to be used as a base for concrete types of accounts
  * @see Account
  */
+
+
+@Entity
+@Table(name="account_single_table")
 public abstract class AbstractAccount extends AbstractModel implements Account {
+  @Version
+    private Integer version;
+
+  @CreationTimestamp
+  private Date creationTime;
+
+  @UpdateTimestamp
+  private Date updateTime;
 
     private double balance = 0;
     private Integer customerId;
+    @ManyToOne
+    private Customer customer;
 
     /**
      * @see Account#getBalance()

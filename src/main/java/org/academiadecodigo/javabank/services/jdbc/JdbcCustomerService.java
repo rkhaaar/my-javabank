@@ -2,20 +2,26 @@ package org.academiadecodigo.javabank.services.jdbc;
 
 import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
-import org.academiadecodigo.javabank.persistence.ConnectionManager;
+import org.academiadecodigo.javabank.persistence.DbManager;
 import org.academiadecodigo.javabank.services.AccountService;
 import org.academiadecodigo.javabank.services.CustomerService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.transaction.RollbackException;
 import java.sql.*;
 import java.util.*;
 
 public class JdbcCustomerService implements CustomerService {
 
     private AccountService accountService;
-    private ConnectionManager connectionManager;
+    private DbManager dbManager;
 
-    public JdbcCustomerService(ConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
+    public JdbcCustomerService(DbManager dbManager) {
+        this.dbManager = dbManager;
     }
 
     public void setAccountService(AccountService accountService) {
@@ -23,18 +29,26 @@ public class JdbcCustomerService implements CustomerService {
     }
 
     @Override
-    public Customer get(Integer id) {
+    public Customer findById(Integer id) {
 
         Customer customer = null;
-
+        EntityManager em = dbManager.getEmf().createEntityManager();
         try {
+            return em.find(Customer.class, id);
+        }finally {
+            if (em != null){
+                em.close();
+            }
+        }
+
+      /*  try {
             String query = "SELECT customer.id AS cid, first_name, last_name, phone, email, account.id AS aid " +
                 "FROM customer " +
                 "LEFT JOIN account " +
                 "ON customer.id = account.customer_id " +
                 "WHERE customer.id = ?";
 
-            PreparedStatement statement = connectionManager.getConnection().prepareStatement(query);
+            PreparedStatement statement = dbManager.getConnection().prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -45,7 +59,7 @@ public class JdbcCustomerService implements CustomerService {
                 }
 
                 int accountId = resultSet.getInt("aid");
-                Account account = accountService.get(accountId);
+                Account account = accountService.findById(accountId);
 
                 if (account == null) {
                     break;
@@ -60,21 +74,33 @@ public class JdbcCustomerService implements CustomerService {
             e.printStackTrace();
         }
 
-        return customer;
+        return customer;*/
     }
 
     @Override
     public List<Customer> list() {
+        EntityManager em=dbManager.getEmf().createEntityManager();
 
-        Map<Integer, Customer> customers = new HashMap<>();
+        try{
+            CriteriaBuilder builder = em.getCriteriaBuilder();
+            CriteriaQuery <Customer> criteriaQuery = builder.createQuery(Customer.class);
+            Root<Customer> root = criteriaQuery.from(Customer.class);
+            criteriaQuery.select(root);
+            return em.createQuery(criteriaQuery).getResultList();
+        }finally{
+            if (em != null){
+                em.close();
+            }
+        }
 
-        try {
+
+       /* try {
             String query = "SELECT customer.id AS cid, first_name, last_name, phone, email, account.id AS aid " +
                 "FROM customer " +
                 "LEFT JOIN account " +
                 "ON customer.id = account.customer_id";
 
-            PreparedStatement statement = connectionManager.getConnection().prepareStatement(query);
+            PreparedStatement statement = dbManager.getConnection().prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -83,7 +109,7 @@ public class JdbcCustomerService implements CustomerService {
                     customers.put(customer.getId(), customer);
                 }
 
-                Account account = accountService.get(resultSet.getInt("aid"));
+                Account account = accountService.findById(resultSet.getInt("aid"));
                 if (account != null) {
                     customers.get(resultSet.getInt("cid")).addAccount(account);
                 }
@@ -93,13 +119,13 @@ public class JdbcCustomerService implements CustomerService {
             e.printStackTrace();
         }
 
-        return new LinkedList<>(customers.values());
+        return new LinkedList<>(customers.values());*/
     }
 
     @Override
     public Set<Integer> listCustomerAccountIds(Integer id) {
 
-        Customer customer = get(id);
+        Customer customer = findById(id);
 
         if (customer == null) {
             throw new IllegalArgumentException("Customer does not exist");
@@ -123,7 +149,7 @@ public class JdbcCustomerService implements CustomerService {
     @Override
     public double getBalance(int id) {
 
-        Customer customer = get(id);
+        Customer customer = findById(id);
 
         if (customer == null) {
             throw new IllegalArgumentException("Customer does not exist");
@@ -142,16 +168,25 @@ public class JdbcCustomerService implements CustomerService {
     @Override
     public void add(Customer customer) {
 
-        if (customer.getId() != null && get(customer.getId()) != null) {
+        if (customer.getId() != null && findById(customer.getId()) != null) {
             return;
         }
+        EntityManager em = dbManager.getEmf().createEntityManager();
 
-        try {
+        try{
+            em.getTransaction().begin();
+            em.merge(customer);
+            em.getTransaction().commit();
+        }finally{
+            em.close();
+        }
+
+       /* try {
 
             String query = "INSERT INTO customer(first_name, last_name, email, phone) " +
                 "VALUES(?, ?, ?, ?)";
 
-            PreparedStatement statement = connectionManager.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = dbManager.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getLastName());
@@ -170,10 +205,10 @@ public class JdbcCustomerService implements CustomerService {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
-    private Customer buildCustomer(ResultSet resultSet) throws SQLException {
+    /*private Customer buildCustomer(ResultSet resultSet) throws SQLException {
 
         Customer customer = new Customer();
 
@@ -184,5 +219,5 @@ public class JdbcCustomerService implements CustomerService {
         customer.setEmail(resultSet.getString("email"));
 
         return customer;
-    }
+    }*/
 }
